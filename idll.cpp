@@ -1,196 +1,245 @@
-#include "idll.h" // Inclui o cabeçalho da classe IDll
+#include "idll.h" // Includes the header file for the IDll class
 
-// Função auxiliar para apagar um nó
+/**
+ * @brief Helper function to delete a node.
+ * 
+ * @param node The node to be deleted.
+ */
 void deleteNode(INode* node) {
-    delete node; // Apaga o nó da memória
+    delete node; // Deallocates the memory for the node
 }
 
-// Construtor da classe IDll
+/**
+ * @brief Constructor for the IDll class.
+ * Initializes an empty list with head, tail set to nullptr, and size set to 0.
+ */
 IDll::IDll() : head(nullptr), tail(nullptr), size(0) {}
 
-// Destrutor da classe IDll
+/**
+ * @brief Destructor for the IDll class.
+ * Clears the list by deallocating memory used by nodes.
+ */
 IDll::~IDll() {
-    clear(); // Chama a função clear() para libertar a memória ocupada pelos nós
+    clear(); // Calls the clear() function to free the memory occupied by nodes
 }
 
-// Retorna o tamanho da lista
+/**
+ * @brief Returns the size of the list.
+ * 
+ * @return The current size of the list.
+ */
 int IDll::getSize() const {
     return size;
 }
 
-// Insere um novo nó com o valor item no início da lista
+/**
+ * @brief Inserts a new node with the given item at the start of the list.
+ * 
+ * @param item The value to be inserted.
+ */
 void IDll::insertAtStart(int item) {
-    INode* newNode = new INode(item, nullptr, head); // Cria um novo nó
+    INode* newNode = new INode(item, nullptr, head); // Creates a new node
     if (head != nullptr) {
-        head->prev = newNode; // Atualiza o ponteiro prev do nó cabeça
+        head->prev = newNode; // Updates the previous pointer of the head node
     } else {
-        tail = newNode; // Atualiza o ponteiro cauda se a lista estiver vazia
+        tail = newNode; // Updates the tail pointer if the list is empty
     }
-    head = newNode; // Atualiza o ponteiro cabeça
-    size++; // Incrementa o tamanho da lista
+    head = newNode; // Updates the head pointer
+    size++; // Increments the size of the list
 }
 
-// Insere um novo nó com o valor item no final da lista
+/**
+ * @brief Inserts a new node with the given item at the end of the list.
+ * 
+ * @param item The value to be inserted.
+ */
 void IDll::insertAtEnd(int item) {
-    INode* newNode = new INode(item, tail, nullptr); // Cria um novo nó
+    INode* newNode = new INode(item, tail, nullptr); // Creates a new node
     if (tail != nullptr) {
-        tail->next = newNode; // Atualiza o ponteiro next do nó cauda
+        tail->next = newNode; // Updates the next pointer of the tail node
     } else {
-        head = newNode; // Atualiza o ponteiro cabeça se a lista estiver vazia
+        head = newNode; // Updates the head pointer if the list is empty
     }
-    tail = newNode; // Atualiza o ponteiro cauda
-    size++; // Incrementa o tamanho da lista
+    tail = newNode; // Updates the tail pointer
+    size++; // Increments the size of the list
 }
 
-// Remove o nó do início da lista
+/**
+ * @brief Deletes the node at the start of the list.
+ */
 void IDll::deleteFromStart() {
-    if (head == nullptr) return; // Verifica se a lista está vazia
-    INode* temp = head; // Armazena o endereço do nó a ser removido
-    head = head->next; // Atualiza o ponteiro cabeça
+    if (head == nullptr) return; // Checks if the list is empty
+    INode* temp = head; // Stores the address of the node to be removed
+    head = head->next; // Updates the head pointer
     if (head != nullptr) {
-        head->prev = nullptr; // Atualiza o ponteiro prev do novo nó cabeça
+        head->prev = nullptr; // Updates the previous pointer of the new head node
     } else {
-        tail = nullptr; // Atualiza o ponteiro cauda se a lista ficar vazia
+        tail = nullptr; // Updates the tail pointer if the list becomes empty
     }
-    deleteNode(temp); // Apaga o nó
-    size--; // Decrementa o tamanho da lista
+    deleteNode(temp); // Deletes the node
+    size--; // Decrements the size of the list
 }
 
-// Remove o nó do final da lista
+/**
+ * @brief Deletes the node at the end of the list.
+ */
 void IDll::deleteFromEnd() {
-    if (tail == nullptr) return; // Verifica se a lista está vazia
-    INode* temp = tail; // Armazena o endereço do nó a ser removido
-    tail = tail->prev; // Atualiza o ponteiro cauda
+    if (tail == nullptr) return; // Checks if the list is empty
+    INode* temp = tail; // Stores the address of the node to be removed
+    tail = tail->prev; // Updates the tail pointer
     if (tail != nullptr) {
-        tail->next = nullptr; // Atualiza o ponteiro next do novo nó cauda
+        tail->next = nullptr; // Updates the next pointer of the new tail node
     } else {
-        head = nullptr; // Atualiza o ponteiro cabeça se a lista ficar vazia
+        head = nullptr; // Updates the head pointer if the list becomes empty
     }
-    deleteNode(temp); // Apaga o nó
-    size--; // Decrementa o tamanho da lista
+    deleteNode(temp); // Deletes the node
+    size--; // Decrements the size of the list
 }
 
-// Remove todos os nós da lista
+/**
+ * @brief Clears all nodes in the list, resetting the size to 0.
+ */
 void IDll::clear() {
     while (head != nullptr) {
-        INode* temp = head; // Armazena o endereço do nó a ser removido
-        head = head->next; // Atualiza o ponteiro cabeça
-        deleteNode(temp); // Apaga o nó
+        INode* temp = head; // Stores the address of the node to be removed
+        head = head->next; // Updates the head pointer
+        deleteNode(temp); // Deletes the node
     }
-    tail = nullptr; // Reseta o ponteiro cauda
-    size = 0; // Reseta o tamanho da lista
+    tail = nullptr; // Resets the tail pointer
+    size = 0; // Resets the size of the list
 }
 
-// Imprime os elementos da lista
+/**
+ * @brief Prints all elements in the list.
+ */
 void IDll::print() {
     if (head == nullptr) {
-        std::cout << "Comando print: Lista vazia!\n"; // Se a lista estiver vazia, imprime uma mensagem
+        std::cout << "Command print: List is empty!\n"; // If the list is empty, prints a message
         return;
     }
 
-    INode* current = head; // Inicia a partir do nó cabeça
-    std::cout << "Lista= "; // Imprime a mensagem inicial
-    while (current != nullptr) { // Itera sobre todos os nós
-        std::cout << current->item; // Imprime o valor do nó atual
+    INode* current = head; // Starts from the head node
+    std::cout << "List= "; // Prints the initial message
+    while (current != nullptr) { // Iterates through all the nodes
+        std::cout << current->item; // Prints the value of the current node
         if (current->next != nullptr) {
-            std::cout << " "; // Imprime um espaço entre os elementos
+            std::cout << " "; // Prints a space between elements
         }
-        current = current->next; // Move para o próximo nó
+        current = current->next; // Moves to the next node
     }
-    std::cout << "\n"; // Imprime uma nova linha no final
+    std::cout << "\n"; // Prints a newline at the end
 }
 
-// Imprime o primeiro elemento da lista
+/**
+ * @brief Prints the first element in the list.
+ */
 void IDll::printFirst() {
     if (head != nullptr) {
-        std::cout << "Lista(0)= " << head->item << "\n"; // Se a lista não estiver vazia, imprime o primeiro elemento
+        std::cout << "List(0)= " << head->item << "\n"; // If the list is not empty, prints the first element
     }
 }
 
-// Imprime o último elemento da lista
+/**
+ * @brief Prints the last element in the list.
+ */
 void IDll::printLast() {
     if (tail != nullptr) {
-        std::cout << "Lista(end)= " << tail->item << "\n"; // Se a lista não estiver vazia, imprime o último elemento
+        std::cout << "List(end)= " << tail->item << "\n"; // If the list is not empty, prints the last element
     }
 }
 
-// Procura por um elemento na lista e imprime a sua posição
+/**
+ * @brief Finds a specific item in the list and prints its position.
+ * 
+ * @param item The item to be searched for.
+ */
 void IDll::find(int item) {
-    int index = 0; // Inicia o índice a partir de zero
-    for (INode* current = head; current != nullptr; current = current->next) { // Itera sobre todos os nós
+    int index = 0; // Starts the index from zero
+    for (INode* current = head; current != nullptr; current = current->next) { // Iterates through all the nodes
         if (current->item == item) {
-            std::cout << "Item " << item << " na posicao " << index << "\n"; // Se encontrar o elemento, imprime a sua posição
+            std::cout << "Item " << item << " at position " << index << "\n"; // If found, prints its position
             return;
         }
-        index++; // Incrementa o índice
+        index++; // Increments the index
     }
-    std::cout << "Item " << item << " nao encontrado!\n"; // Se o elemento não for encontrado, imprime uma mensagem
+    std::cout << "Item " << item << " not found!\n"; // If the item is not found, prints a message
 }
 
-// Remove o nó na posição especificada
+/**
+ * @brief Deletes the node at the specified position.
+ * 
+ * @param pos The position of the node to be deleted.
+ */
 void IDll::deleteAtPos(int pos) {
     if (pos < 0 || pos >= size) {
-        std::cout << "Comando delete_pos: Posicao invalida!\n"; // Se a posição for inválida, imprime uma mensagem de erro
+        std::cout << "Command delete_pos: Invalid position!\n"; // If the position is invalid, prints an error message
         return;
     }
     if (pos == 0) {
-        deleteFromStart(); // Se a posição for zero, remove o primeiro nó
+        deleteFromStart(); // If the position is zero, deletes the first node
         return;
     }
     if (pos == size - 1) {
-        deleteFromEnd(); // Se a posição for a última, remove o último nó
+        deleteFromEnd(); // If the position is the last one, deletes the last node
         return;
     }
 
-    INode* current = head; // Inicia a partir do nó cabeça
+    INode* current = head; // Starts from the head node
     for (int i = 0; i < pos; i++) {
-        current = current->next; // Move para o nó na posição especificada
+        current = current->next; // Moves to the node at the specified position
     }
 
-    current->prev->next = current->next; // Atualiza os ponteiros para remover o nó
+    current->prev->next = current->next; // Updates the pointers to remove the node
     current->next->prev = current->prev;
-    deleteNode(current); // Apaga o nó
-    size--; // Decrementa o tamanho da lista
+    deleteNode(current); // Deletes the node
+    size--; // Decrements the size of the list
 }
 
-// Inverte a ordem dos elementos entre as posições pos1 e pos2
+/**
+ * @brief Reverses the order of elements between positions pos1 and pos2.
+ * 
+ * @param pos1 The starting position.
+ * @param pos2 The ending position.
+ */
 void IDll::invertRange(int pos1, int pos2) {
     if (pos1 < 0 || pos2 >= size || pos1 > pos2) {
-        std::cout << "Comando invert_range: Posicao invalida!\n"; // Se as posições forem inválidas, imprime uma mensagem de erro
+        std::cout << "Command invert_range: Invalid position!\n"; // If the positions are invalid, prints an error message
         return;
     }
 
-    INode *current1 = head, *current2 = tail; // Inicia a partir dos nós cabeça e cauda
-    for (int i = 0; i < pos1; i++) current1 = current1->next; // Move para o nó na posição pos1
-    for (int i = size - 1; i > pos2; i--) current2 = current2->prev; // Move para o nó na posição pos2
+    INode *current1 = head, *current2 = tail; // Starts from the head and tail nodes
+    for (int i = 0; i < pos1; i++) current1 = current1->next; // Moves to the node at position pos1
+    for (int i = size - 1; i > pos2; i--) current2 = current2->prev; // Moves to the node at position pos2
 
-    while (current1 != current2 && current1->prev != current2) { // Enquanto os nós não se encontram
-        std::swap(current1->item, current2->item); // Troca os valores dos nós
-        current1 = current1->next; // Move para o próximo nó
-        current2 = current2->prev; // Move para o nó anterior
+    while (current1 != current2 && current1->prev != current2) { // While the nodes are not at the same position
+        std::swap(current1->item, current2->item); // Swaps the values of the nodes
+        current1 = current1->next; // Moves to the next node
+        current2 = current2->prev; // Moves to the previous node
     }
 }
 
-// Encontra o elemento máximo na lista e imprime a sua posição
+/**
+ * @brief Finds the maximum element in the list and prints its position.
+ */
 void IDll::find_max() {
     if (head == nullptr) {
-        std::cout << "Comando find_max: Lista vazia!\n"; // Se a lista estiver vazia, imprime uma mensagem de erro
+        std::cout << "Command find_max: List is empty!\n"; // If the list is empty, prints an error message
         return;
     }
 
-    int maxItem = head->item; // Inicia o valor máximo com o valor do primeiro elemento
-    int maxPosition = 0; // Inicia a posição máxima com zero
-    int currentPosition = 0; // Inicia a posição atual com zero
-    INode* current = head; // Inicia a partir do nó cabeça
+    int maxItem = head->item; // Starts with the value of the first node
+    int maxPosition = 0; // Initializes the maximum position to zero
+    int currentPosition = 0; // Initializes the current position to zero
+    INode* current = head; // Starts from the head node
 
-    while (current != nullptr) { // Itera sobre todos os nós
-        if (current->item > maxItem) { // Se encontrar um valor maior
-            maxItem = current->item; // Atualiza o valor máximo
-            maxPosition = currentPosition; // Atualiza a posição máxima
+    while (current != nullptr) { // Iterates through all the nodes
+        if (current->item > maxItem) { // If a larger value is found
+            maxItem = current->item; // Updates the maximum value
+            maxPosition = currentPosition; // Updates the maximum position
         }
-        current = current->next; // Move para o próximo nó
-        currentPosition++; // Incrementa a posição atual
+        current = current->next; // Moves to the next node
+        currentPosition++; // Increments the current position
     }
 
-    std::cout << "Max Item " << maxItem << " na posicao " << maxPosition << "\n"; // Imprime o valor máximo e a sua posição
+    std::cout << "Max Item " << maxItem << " at position " << maxPosition << "\n"; // Prints the maximum value and its position
 }

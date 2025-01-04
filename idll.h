@@ -3,68 +3,125 @@
 
 #include <iostream>
 
-// Definição do nó da lista
+/**
+ * @brief Structure that defines a node in a doubly linked list.
+ */
 struct INode {
-    int item;       // Valor armazenado no nó
-    INode* prev;    // Ponteiro para o nó anterior
-    INode* next;    // Ponteiro para o próximo nó
+    int item;       ///< Value stored in the node
+    INode* prev;    ///< Pointer to the previous node
+    INode* next;    ///< Pointer to the next node
 
-    // Construtor para inicializar um nó com valores padrão
+    /**
+     * @brief Constructor to initialize a node with default values.
+     * 
+     * @param item Value to be stored in the node.
+     * @param prev Pointer to the previous node.
+     * @param next Pointer to the next node.
+     */
     INode(int item, INode* prev = nullptr, INode* next = nullptr)
         : item(item), prev(prev), next(next) {}
 };
 
-// Definição da classe da lista duplamente ligada
+/**
+ * @brief Class representing a doubly linked list (DLL).
+ * 
+ * This class provides functionalities to insert, delete, and manipulate elements in the list.
+ */
 class IDll {
 private:
-    INode* head;    // Ponteiro para o primeiro nó da lista
-    INode* tail;    // Ponteiro para o último nó da lista
-    int size;       // Tamanho atual da lista
+    INode* head;    ///< Pointer to the first node in the list
+    INode* tail;    ///< Pointer to the last node in the list
+    int size;       ///< Current size of the list
 
 public:
-    // Construtor da classe IDll
+    /**
+     * @brief Constructor of the IDll class.
+     * Initializes an empty list with head, tail set to nullptr, and size set to 0.
+     */
     IDll();
 
-    // Destrutor da classe IDll
+    /**
+     * @brief Destructor of the IDll class.
+     * Clears the list by deallocating memory used by nodes.
+     */
     ~IDll();
-    
-    // Retorna o tamanho da lista
+
+    /**
+     * @brief Returns the size of the list.
+     * 
+     * @return The current size of the list.
+     */
     int getSize() const;
-    
-    // Insere um novo nó com o valor item no início da lista
+
+    /**
+     * @brief Inserts a new node with the given item at the start of the list.
+     * 
+     * @param item The value to be inserted.
+     */
     void insertAtStart(int item);
 
-    // Insere um novo nó com o valor item no final da lista
+    /**
+     * @brief Inserts a new node with the given item at the end of the list.
+     * 
+     * @param item The value to be inserted.
+     */
     void insertAtEnd(int item);
 
-    // Remove o nó do início da lista
+    /**
+     * @brief Deletes the node at the start of the list.
+     */
     void deleteFromStart();
 
-    // Remove o nó do final da lista
+    /**
+     * @brief Deletes the node at the end of the list.
+     */
     void deleteFromEnd();
 
-    // Remove todos os nós da lista
+    /**
+     * @brief Clears all nodes in the list, resetting the size to 0.
+     */
     void clear();
 
-    // Imprime os elementos da lista
+    /**
+     * @brief Prints all the elements in the list.
+     */
     void print();
 
-    // Imprime o primeiro elemento da lista
+    /**
+     * @brief Prints the first element in the list.
+     */
     void printFirst();
 
-    // Imprime o último elemento da lista
+    /**
+     * @brief Prints the last element in the list.
+     */
     void printLast();
 
-    // Procura por um elemento na lista e imprime a sua posição
+    /**
+     * @brief Finds a specific item in the list and prints its position.
+     * 
+     * @param item The item to be searched for.
+     */
     void find(int item);
 
-    // Remove o nó na posição especificada
+    /**
+     * @brief Deletes the node at the specified position.
+     * 
+     * @param pos The position of the node to be deleted.
+     */
     void deleteAtPos(int pos);
 
-    // Inverte a ordem dos elementos entre as posições pos1 e pos2
+    /**
+     * @brief Reverses the order of elements between positions pos1 and pos2.
+     * 
+     * @param pos1 The starting position.
+     * @param pos2 The ending position.
+     */
     void invertRange(int pos1, int pos2);
 
-    // Encontra o elemento máximo na lista e imprime a sua posição
+    /**
+     * @brief Finds the maximum element in the list and prints its position.
+     */
     void find_max();
 };
 
